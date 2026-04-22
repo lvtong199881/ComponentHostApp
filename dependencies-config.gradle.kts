@@ -1,27 +1,35 @@
 // 组件依赖配置脚本
-// ComponentHostApp 作为壳工程，通过 Maven 依赖Components
+// 源码依赖模式：Components 目录存在时自动启用
+// Maven 依赖模式：从 GitHub Packages 获取组件
 
 val componentVersion = providers.gradleProperty("component.version").orNull ?: "1.0.0"
-val componentGroupId = providers.gradleProperty("component.groupId").orNull ?: "com.mohanlv.component"
+val componentGroupId = "com.mohanlv.component"
+
+// 检测源码依赖模式（Components 目录存在）
+val useSourceDependency = file("../Components").exists()
 
 println("========================================")
-println("📦 ComponentHostApp - Maven Dependency Mode")
+println("📦 ComponentHostApp Dependency Mode")
+println("   Mode: ${if (useSourceDependency) "SOURCE (Components/)" else "MAVEN (GitHub Packages)"})
 println("   Version: $componentVersion")
 println("   GroupId: $componentGroupId")
 println("========================================")
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lvtong199881/AndroidComponentApp")
-            credentials {
-                username = "lvtong199881"
-                password = System.getenv("GITHUB_TOKEN") ?: ""
+if (!useSourceDependency) {
+    // Maven 依赖模式（main 分支 / 发布）
+    dependencyResolutionManagement {
+        repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+        repositories {
+            google()
+            mavenCentral()
+            mavenLocal()
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/lvtong199881/AndroidComponentApp")
+                credentials {
+                    username = "lvtong199881"
+                    password = System.getenv("GITHUB_TOKEN") ?: ""
+                }
             }
         }
     }
