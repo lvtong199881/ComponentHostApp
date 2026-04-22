@@ -14,4 +14,3 @@ local.properties
 *.apk
 *.aab
 *.ap_build/
-modules.conf
