@@ -7,10 +7,11 @@ val componentGroupId = "com.mohanlv.component"
 
 // 检测源码依赖模式（Components 目录存在）
 val useSourceDependency = file("../Components").exists()
+val modeName = if (useSourceDependency) "SOURCE (Components/)" else "MAVEN (GitHub Packages)"
 
 println("========================================")
-println("📦 ComponentHostApp Dependency Mode")
-println("   Mode: ${if (useSourceDependency) "SOURCE (Components/)" else "MAVEN (GitHub Packages)"})
+println("ComponentHostApp Dependency Mode")
+println("   Mode: $modeName")
 println("   Version: $componentVersion")
 println("   GroupId: $componentGroupId")
 println("========================================")
