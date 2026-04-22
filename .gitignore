@@ -13,4 +13,4 @@ local.properties
 # Build outputs
 *.apk
 *.aab
-*.ap_
+*.ap_build/
