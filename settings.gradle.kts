@@ -11,25 +11,42 @@ rootProject.name = "ComponentHostApp"
 // 宿主应用模块
 include(":app")
 
-// 源码依赖模式：检查 ../AndroidComponentProject 目录是否存在
-val componentsDir = file("../AndroidComponentProject")
-if (componentsDir.exists()) {
-    println("检测到 AndroidComponentProject 目录，使用源码依赖模式")
-    includeBuild("../AndroidComponentProject") {
-        dependencySubstitution {
-            substitute(module("com.mohanlv.component:base")).using(project(":base"))
-            substitute(module("com.mohanlv.component:router")).using(project(":router"))
-            substitute(module("com.mohanlv.component:network")).using(project(":network"))
-            substitute(module("com.mohanlv.component:login")).using(project(":login"))
-            substitute(module("com.mohanlv.component:home")).using(project(":home"))
-            substitute(module("com.mohanlv.component:user")).using(project(":user"))
-            substitute(module("com.mohanlv.component:reactnative")).using(project(":reactnative"))
-            substitute(module("com.mohanlv.component:logger")).using(project(":logger"))
-            substitute(module("com.mohanlv.component:websdk")).using(project(":websdk"))
+// 读取模块路径配置
+val modulesFile = file("modules.conf")
+val modulePaths = mutableMapOf<String, String>()
+
+if (modulesFile.exists()) {
+    modulesFile.readLines()
+        .filter { it.isNotBlank() && !it.startsWith("#") }
+        .forEach { line ->
+            val parts = line.split("=", limit = 2)
+            if (parts.size == 2) {
+                modulePaths[parts[0].trim()] = parts[1].trim()
+            }
+        }
+}
+
+// 检测是否有任何模块配置了源码路径
+val hasSourceModules = modulePaths.values.any { path ->
+    file(path).exists()
+}
+
+if (hasSourceModules) {
+    println("检测到源码模块配置，使用源码依赖模式")
+    
+    // 为每个配置了路径的模块创建 includeBuild
+    modulePaths.forEach { (moduleName, modulePath) ->
+        if (file(modulePath).exists()) {
+            println("  - $moduleName: $modulePath")
+            includeBuild(modulePath) {
+                dependencySubstitution {
+                    substitute(module("com.mohanlv.component:$moduleName")).using(project(":$moduleName"))
+                }
+            }
         }
     }
 } else {
-    println("未检测到 AndroidComponentProject 目录，使用 Maven 依赖模式")
+    println("未检测到源码模块，使用 Maven 依赖模式")
 }
 
 // 应用组件依赖配置
