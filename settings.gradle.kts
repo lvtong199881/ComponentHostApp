@@ -11,11 +11,11 @@ rootProject.name = "ComponentHostApp"
 // 宿主应用模块
 include(":app")
 
-// 源码依赖模式：检查 ../Components 目录是否存在
-val componentsDir = file("../Components")
+// 源码依赖模式：检查 ../AndroidComponentProject 目录是否存在
+val componentsDir = file("../AndroidComponentProject")
 if (componentsDir.exists()) {
-    println("📦 检测到 Components 目录，使用源码依赖模式")
-    includeBuild("../Components") {
+    println("检测到 AndroidComponentProject 目录，使用源码依赖模式")
+    includeBuild("../AndroidComponentProject") {
         dependencySubstitution {
             substitute(module("com.mohanlv.component:base")).using(project(":base"))
             substitute(module("com.mohanlv.component:router")).using(project(":router"))
@@ -29,7 +29,7 @@ if (componentsDir.exists()) {
         }
     }
 } else {
-    println("📦 未检测到 Components 目录，使用 Maven 依赖模式")
+    println("未检测到 AndroidComponentProject 目录，使用 Maven 依赖模式")
 }
 
 // 应用组件依赖配置
