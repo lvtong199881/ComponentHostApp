@@ -28,42 +28,28 @@ if (modulesFile.exists()) {
     }
 }
 
-// 找出包含 settings.gradle.kts 的目录（模块的父项目）
-fun findSettingsDir(modulePath: String): String? {
-    var dir = file(modulePath)
-    while (dir.parentFile != null) {
-        dir = dir.parentFile
-        if (file("${dir.absolutePath}/settings.gradle.kts").exists()) {
-            return dir.absolutePath
-        }
-    }
-    return null
+// 检测是否有任何源码模块配置
+val hasSourceModules = modulePaths.values.any { path ->
+    file(path).exists()
 }
 
-// 收集所有需要 includeBuild 的项目（去重）
-val settingsDirs = mutableSetOf<String>()
-modulePaths.forEach { (moduleName, modulePath) ->
-    if (file(modulePath).exists()) {
-        val settingsDir = findSettingsDir(modulePath)
-        if (settingsDir != null) {
-            settingsDirs.add(settingsDir)
-        }
-    }
-}
-
-// 执行 includeBuild
-if (settingsDirs.isNotEmpty()) {
+if (hasSourceModules) {
     println("检测到源码模块配置，使用源码依赖模式")
-    settingsDirs.forEach { dir ->
-        println("  - 源码项目: $dir")
-    }
     
-    // 对每个包含 settings.gradle.kts 的项目执行一次 includeBuild
-    settingsDirs.forEach { settingsDir ->
+    // 找出所有模块所在的 settings.gradle.kts 目录
+    val settingsDir = modulePaths
+        .filter { (_, path) -> file(path).exists() }
+        .map { (_, path) -> file(path).parentFile.absolutePath }
+        .firstOrNull { dir -> file("$dir/settings.gradle.kts").exists() }
+    
+    if (settingsDir != null) {
+        println("  - 加载源码项目: $settingsDir")
+        
+        // 配置 includeBuild 和依赖替换
         includeBuild(settingsDir) {
             dependencySubstitution {
                 modulePaths.forEach { (moduleName, modulePath) ->
-                    if (file(modulePath).exists() && findSettingsDir(modulePath) == settingsDir) {
+                    if (file(modulePath).exists()) {
                         substitute(module("com.mohanlv.component:$moduleName")).using(project(":$moduleName"))
                     }
                 }
