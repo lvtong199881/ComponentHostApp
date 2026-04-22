@@ -11,19 +11,21 @@ rootProject.name = "ComponentHostApp"
 // 宿主应用模块
 include(":app")
 
-// 读取模块路径配置
-val modulesFile = file("modules.conf")
+// 读取模块路径配置（JSON格式）
+val modulesFile = file("modules.json")
 val modulePaths = mutableMapOf<String, String>()
 
 if (modulesFile.exists()) {
-    modulesFile.readLines()
-        .filter { it.isNotBlank() && !it.startsWith("#") }
-        .forEach { line ->
-            val parts = line.split("=", limit = 2)
-            if (parts.size == 2) {
-                modulePaths[parts[0].trim()] = parts[1].trim()
+    try {
+        val json = groovy.json.JsonSlurper().parse(modulesFile) as Map<*, *>
+        json.forEach { (key, value) ->
+            if (key is String && value is String) {
+                modulePaths[key] = value
             }
         }
+    } catch (e: Exception) {
+        println("Warning: Failed to parse modules.json: ${e.message}")
+    }
 }
 
 // 检测是否有任何模块配置了源码路径
@@ -33,7 +35,7 @@ val hasSourceModules = modulePaths.values.any { path ->
 
 if (hasSourceModules) {
     println("检测到源码模块配置，使用源码依赖模式")
-    
+
     // 为每个配置了路径的模块创建 includeBuild
     modulePaths.forEach { (moduleName, modulePath) ->
         if (file(modulePath).exists()) {
