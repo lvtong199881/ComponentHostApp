@@ -176,6 +176,7 @@ dependencies {
     
     // ========== 组件依赖 ==========
     implementation("$componentGroupId:base:$componentVersion")
+    implementation("$componentGroupId:startup:$componentVersion")
     implementation("$componentGroupId:router:$componentVersion")
     implementation("$componentGroupId:network:$componentVersion")
     implementation("$componentGroupId:login:$componentVersion")

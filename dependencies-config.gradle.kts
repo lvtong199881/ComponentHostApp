@@ -3,7 +3,7 @@
 // Maven 依赖模式：从 GitHub Packages 获取组件
 
 val componentVersion = providers.gradleProperty("component.version").orNull ?: "1.0.0"
-val componentGroupId = "com.mohanlv.component"
+val componentGroupId = providers.gradleProperty("component.groupId").orNull ?: "com.mohanlv"
 
 // 检测源码依赖模式（Components 目录存在）
 val useSourceDependency = file("../Components").exists()
@@ -29,7 +29,10 @@ if (!useSourceDependency) {
                 url = uri("https://maven.pkg.github.com/lvtong199881/AndroidComponentApp")
                 credentials {
                     username = "lvtong199881"
-                    password = System.getenv("GITHUB_TOKEN") ?: ""
+                    password = System.getenv("GITHUB_TOKEN") ?: run {
+                        val tokenFile = java.io.File(System.getProperty("user.home"), ".github_token")
+                        if (tokenFile.exists()) tokenFile.readText().trim() else ""
+                    }
                 }
             }
         }
