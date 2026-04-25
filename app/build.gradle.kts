@@ -164,8 +164,8 @@ fun formatSize(bytes: Long): String = when {
 }
 
 // 组件依赖配置
-val componentVersion = providers.gradleProperty("component.version").get()
-val componentGroupId = providers.gradleProperty("component.groupId").get()
+val componentGroupId = "com.mohanlv"
+val componentVersion = "1.0.0"
 
 dependencies {
     // AndroidX

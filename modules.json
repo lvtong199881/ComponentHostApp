@@ -1,13 +1,9 @@
 {
   "base": "../AndroidComponentProject/base",
-  "startup": "../AndroidComponentProject/startup",
-  "router": "../AndroidComponentProject/router",
-  "network": "../AndroidComponentProject/network",
   "login": "../AndroidComponentProject/login",
   "home": "../AndroidComponentProject/home",
   "user": "../AndroidComponentProject/user",
   "reactnative": "../AndroidComponentProject/reactnative",
-  "logger": "../AndroidComponentProject/logger",
   "websdk": "../AndroidComponentProject/websdk",
   "shortvideo": "../AndroidComponentProject/shortvideo"
 }
