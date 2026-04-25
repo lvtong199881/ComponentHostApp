@@ -1,8 +1,2 @@
 {
-  "login": "../AndroidComponentProject/login",
-  "home": "../AndroidComponentProject/home",
-  "user": "../AndroidComponentProject/user",
-  "reactnative": "../AndroidComponentProject/reactnative",
-  "websdk": "../AndroidComponentProject/websdk",
-  "shortvideo": "../AndroidComponentProject/shortvideo"
 }
