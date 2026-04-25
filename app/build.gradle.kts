@@ -163,30 +163,28 @@ fun formatSize(bytes: Long): String = when {
     else -> "${bytes / (1024 * 1024)} MB"
 }
 
-// 组件依赖配置
-val componentGroupId = "com.mohanlv"
-val componentVersion = "1.2.3"
-
 dependencies {
     // AndroidX
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    
-    // ========== 组件依赖 ==========
-    implementation("$componentGroupId:base:$componentVersion")
-    implementation("$componentGroupId:startup:$componentVersion")
-    implementation("$componentGroupId:router:$componentVersion")
-    implementation("$componentGroupId:network:$componentVersion")
-    implementation("$componentGroupId:login:$componentVersion")
-    implementation("$componentGroupId:home:$componentVersion")
-    implementation("$componentGroupId:reactnative:$componentVersion")
-    implementation("$componentGroupId:logger:$componentVersion")
-    implementation("$componentGroupId:user:$componentVersion")
-    implementation("$componentGroupId:websdk:$componentVersion")
-    implementation("$componentGroupId:shortvideo:$componentVersion")
-    // =======================================================
+
+    // ========== 基础组件 (Maven) ==========
+    implementation("com.mohanlv:base:1.2.3")
+    implementation("com.mohanlv:startup:1.2.3")
+    implementation("com.mohanlv:router:1.2.3")
+    implementation("com.mohanlv:network:1.2.3")
+    implementation("com.mohanlv:logger:1.2.3")
+
+    // ========== 业务组件 (Maven) ==========
+    implementation("com.mohanlv:login:1.2.3")
+    implementation("com.mohanlv:home:1.2.3")
+    implementation("com.mohanlv:user:1.2.3")
+    implementation("com.mohanlv:reactnative:1.2.3")
+    implementation("com.mohanlv:websdk:1.2.3")
+    implementation("com.mohanlv:shortvideo:1.2.3")
+    // ===================================
     
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
