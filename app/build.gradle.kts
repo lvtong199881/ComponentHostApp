@@ -165,7 +165,7 @@ fun formatSize(bytes: Long): String = when {
 
 // 组件依赖配置
 val componentGroupId = "com.mohanlv"
-val componentVersion = "1.0.0"
+val componentVersion = "1.2.3"
 
 dependencies {
     // AndroidX
