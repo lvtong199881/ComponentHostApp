@@ -1,5 +1,4 @@
 {
-  "base": "../AndroidComponentProject/base",
   "login": "../AndroidComponentProject/login",
   "home": "../AndroidComponentProject/home",
   "user": "../AndroidComponentProject/user",
