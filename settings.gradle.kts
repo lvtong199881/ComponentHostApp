@@ -64,7 +64,7 @@ if (settingsDirs.isNotEmpty()) {
             dependencySubstitution {
                 modulePaths.forEach { (moduleName, modulePath) ->
                     if (file(modulePath).exists() && findSettingsDir(modulePath) == settingsDir) {
-                        substitute(module("com.mohanlv.component:$moduleName")).using(project(":$moduleName"))
+                        substitute(module("com.mohanlv:$moduleName")).using(project(":$moduleName"))
                     }
                 }
             }

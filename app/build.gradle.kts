@@ -185,6 +185,7 @@ dependencies {
     implementation("$componentGroupId:logger:$componentVersion")
     implementation("$componentGroupId:user:$componentVersion")
     implementation("$componentGroupId:websdk:$componentVersion")
+    implementation("$componentGroupId:shortvideo:$componentVersion")
     // =======================================================
     
     // Lifecycle
