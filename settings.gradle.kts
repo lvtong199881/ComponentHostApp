@@ -11,20 +11,30 @@ rootProject.name = "ComponentHostApp"
 // 宿主应用模块
 include(":app")
 
-// 读取模块路径配置（JSON格式）
-val modulesFile = file("modules.json")
+// 读取模块路径配置（HOCON 格式，支持 # 注释）
+val modulesFile = file("modules.conf")
 val modulePaths = mutableMapOf<String, String>()
 
 if (modulesFile.exists()) {
     try {
-        val json = groovy.json.JsonSlurper().parse(modulesFile) as Map<*, *>
+        // 读取文件内容，移除 # 注释后当作 JSON 解析
+        val content = modulesFile.readText()
+        val withoutComments = content
+            .split("\n")
+            .map { line ->
+                val idx = line.indexOf('#')
+                if (idx >= 0) line.substring(0, idx) else line
+            }
+            .joinToString("\n")
+
+        val json = groovy.json.JsonSlurper().parseText(withoutComments) as Map<*, *>
         json.forEach { (key, value) ->
             if (key is String && value is String) {
                 modulePaths[key] = value
             }
         }
     } catch (e: Exception) {
-        println("Warning: Failed to parse modules.json: ${e.message}")
+        println("Warning: Failed to parse modules.conf: ${e.message}")
     }
 }
 
