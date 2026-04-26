@@ -171,7 +171,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // ========== 基础组件 (Maven) ==========
-    implementation("com.mohanlv:base:1.2.8")
+    implementation("com.mohanlv:base:1.2.17")
     implementation("com.mohanlv:startup:1.2.6")
     implementation("com.mohanlv:router:1.2.6")
     implementation("com.mohanlv:network:1.2.6")
