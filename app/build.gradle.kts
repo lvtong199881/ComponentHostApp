@@ -178,12 +178,12 @@ dependencies {
     implementation("com.mohanlv:logger:1.2.21")
 
     // ========== 业务组件 (Maven) ==========
-    implementation("com.mohanlv:login:1.2.9")
-    implementation("com.mohanlv:home:1.2.13")
-    implementation("com.mohanlv:user:1.2.11")
+    implementation("com.mohanlv:login:1.2.16")
+    implementation("com.mohanlv:home:1.2.20")
+    implementation("com.mohanlv:user:1.2.18")
     implementation("com.mohanlv:reactnative:1.2.9")
     implementation("com.mohanlv:websdk:1.2.14")
-    implementation("com.mohanlv:shortvideo:1.2.15")
+    implementation("com.mohanlv:shortvideo:1.2.22")
     // ===================================
     
     // Lifecycle
