@@ -183,7 +183,7 @@ dependencies {
     implementation("com.mohanlv:user:1.2.19")
     implementation("com.mohanlv:reactnative:1.2.12")
     implementation("com.mohanlv:websdk:1.2.19")
-    implementation("com.mohanlv:shortvideo:1.2.24")
+    implementation("com.mohanlv:shortvideo:1.2.25")
     // ===================================
     
     // Lifecycle
