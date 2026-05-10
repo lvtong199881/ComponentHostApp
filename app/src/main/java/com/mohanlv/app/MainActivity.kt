@@ -4,17 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.mohanlv.reactnative.ui.RNManagerFragment
 import com.mohanlv.router.RoutePath
 import com.mohanlv.router.RouterManager
-import com.mohanlv.reactnative.ui.RNManagerFragment
-import com.mohanlv.app.R
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
