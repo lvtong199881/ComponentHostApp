@@ -178,7 +178,7 @@ dependencies {
     implementation("com.mohanlv:logger:1.2.31")
 
     // ========== 业务组件 (Maven) ==========
-    implementation("com.mohanlv:common:1.0.3")
+    implementation("com.mohanlv:common:1.0.8")
     implementation("com.mohanlv:login:1.2.20")
     implementation("com.mohanlv:home:1.2.25")
     implementation("com.mohanlv:user:1.2.22")
