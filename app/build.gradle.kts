@@ -195,19 +195,19 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // ========== 基础组件 (Maven) ==========
-    implementation("com.mohanlv:base:1.2.33")
-    implementation("com.mohanlv:startup:1.2.34")
-    implementation("com.mohanlv:router:1.2.15")
-    implementation("com.mohanlv:network:1.2.20")
-    implementation("com.mohanlv:logger:1.2.31")
+    implementation("com.mohanlv:base:1.2.34")
+    implementation("com.mohanlv:startup:1.2.35")
+    implementation("com.mohanlv:router:1.2.16")
+    implementation("com.mohanlv:network:1.2.21")
+    implementation("com.mohanlv:logger:1.2.32")
 
     // ========== 业务组件 (Maven) ==========
     implementation("com.mohanlv:common:1.0.17")
     implementation("com.mohanlv:login:1.2.20")
     implementation("com.mohanlv:home:1.2.28")
     implementation("com.mohanlv:user:1.2.24")
-    implementation("com.mohanlv:reactnative:1.2.13")
-    implementation("com.mohanlv:websdk:1.2.20")
+    implementation("com.mohanlv:reactnative:1.2.14")
+    implementation("com.mohanlv:websdk:1.2.21")
     implementation("com.mohanlv:shortvideo:1.2.31")
     // ===================================
     
