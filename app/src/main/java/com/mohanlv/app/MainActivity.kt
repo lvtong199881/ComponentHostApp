@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         
         // 启用 edge-to-edge 模式，让内容延伸到系统窗口
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        // 深色状态栏背景配浅色图标
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = true
         
         Log.e(TAG, "========== MainActivity onCreate ==========")
         setContentView(R.layout.activity_main)
