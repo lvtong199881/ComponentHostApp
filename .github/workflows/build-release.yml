@@ -35,10 +35,21 @@ gpr.user=${{ github.actor }}
 gpr.key=${{ secrets.GITHUB_TOKEN }}
 EOF
 
+      - name: 赋予 gradlew 执行权限
+        run: chmod +x gradlew
+
+      - name: 提取版本号
+        id: version
+        run: |
+          VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts)
+          echo "ver=$VERSION" >> $GITHUB_OUTPUT
+
       - name: 构建 Release APK
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew assembleRelease --stacktrace
+        run: |
+          ./gradlew assembleRelease --stacktrace
+          ls -la app/build/outputs/apk/release/ 2>/dev/null || echo "APK not found"
 
       - name: 重命名 APK
         run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.ver }}.apk
