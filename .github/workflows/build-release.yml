@@ -7,6 +7,10 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: read
+      packages: read
+
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +26,15 @@ jobs:
       - name: 恢复 keystore 文件
         run: |
           echo "${{ secrets.RELEASE_KEYSTORE_FILE }}" | base64 -d > app/release.jks
+
+      - name: 配置 GitHub Packages 认证
+        env:
+          GPR_USER: ${{ github.actor }}
+          GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p ~/.gradle
+          echo "gpr.user=${GPR_USER}" >> ~/.gradle/gradle.properties
+          echo "gpr.key=${GPR_TOKEN}" >> ~/.gradle/gradle.properties
 
       - name: 赋予 gradlew 执行权限
         run: chmod +x gradlew
