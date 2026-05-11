@@ -29,7 +29,7 @@ jobs:
 
       - name: 配置 GitHub Packages 认证
         env:
-          GPR_USER: ${{ github.actor }}
+          GPR_USER: lvtong199881
           GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p ~/.gradle
