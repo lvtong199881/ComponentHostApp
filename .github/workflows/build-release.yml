@@ -49,6 +49,6 @@ jobs:
         with:
           files: app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.ver }}.apk
           tag_name: v${{ steps.version.outputs.ver }}
-          release_name: Release v${{ steps.version.outputs.ver }}
+          name: Release v${{ steps.version.outputs.ver }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

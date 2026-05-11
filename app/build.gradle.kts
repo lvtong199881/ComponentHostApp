@@ -2,7 +2,7 @@ import java.io.File
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.android") version "2.2.10"
 }
 
 android {
@@ -40,6 +40,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures { viewBinding = true }
+
+    packaging {
+        jniLibs {
+            keepDebugSymbols += listOf("**/*.so")
+        }
+    }
 }
 
 // ============================================================

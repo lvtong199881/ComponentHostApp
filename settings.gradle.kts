@@ -52,7 +52,7 @@ fun findSettingsDir(modulePath: String): String? {
 
 // 收集所有需要 includeBuild 的项目（去重）
 val settingsDirs = mutableSetOf<String>()
-modulePaths.forEach { (moduleName, modulePath) ->
+modulePaths.forEach { (_, modulePath) ->
     if (file(modulePath).exists()) {
         val settingsDir = findSettingsDir(modulePath)
         if (settingsDir != null) {
