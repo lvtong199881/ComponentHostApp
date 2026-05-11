@@ -28,17 +28,14 @@ jobs:
           echo "${{ secrets.RELEASE_KEYSTORE_FILE }}" | base64 -d > app/release.jks
 
       - name: 配置 GitHub Packages 认证
-        env:
-          GPR_USER: lvtong199881
-          GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 修正 HOME 环境变量以确保 gradle 能找到配置
-          echo "HOME=/home/runner" >> $GITHUB_ENV
           mkdir -p ~/.gradle
+          # 使用正确的属性名
           cat > ~/.gradle/gradle.properties << 'EOF'
 gpr.user=lvtong199881
 gpr.token=${{ secrets.GITHUB_TOKEN }}
 EOF
+          cat ~/.gradle/gradle.properties
 
       - name: 赋予 gradlew 执行权限
         run: chmod +x gradlew
