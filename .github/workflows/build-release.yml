@@ -34,7 +34,10 @@ jobs:
         id: version
         run: |
           VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts)
+          UUID=$(uuidgen | tr -d '-')
+          FULL_VERSION="${VERSION}-${UUID}"
           echo "ver=$VERSION" >> $GITHUB_OUTPUT
+          echo "full_ver=$FULL_VERSION" >> $GITHUB_OUTPUT
 
       - name: 构建 Release APK
         env:
@@ -42,13 +45,13 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: 重命名 APK
-        run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.ver }}.apk
+        run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.full_ver }}.apk
 
       - name: 上传至 GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.ver }}.apk
-          tag_name: v${{ steps.version.outputs.ver }}
-          name: Release v${{ steps.version.outputs.ver }}
+          files: app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.full_ver }}.apk
+          tag_name: v${{ steps.version.outputs.full_ver }}
+          name: Release v${{ steps.version.outputs.full_ver }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
