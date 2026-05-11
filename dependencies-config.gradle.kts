@@ -34,7 +34,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lvtong199881/ComponentHostApp")
+            url = uri("https://maven.pkg.github.com/lvtong199881/PackagesMaven")
             credentials {
                 username = System.getenv("GPR_USER") ?: "github-actions[bot]"
                 password = System.getenv("GPR_TOKEN") ?: ""
