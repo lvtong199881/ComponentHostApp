@@ -44,14 +44,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew assembleRelease
 
-      - name: 重命名 APK
-        run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.full_ver }}.apk
-
       - name: 上传至 GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.full_ver }}.apk
+          files: app/build/outputs/apk/release/app-release-armeabi-v7a.apk
           tag_name: v${{ steps.version.outputs.full_ver }}
           name: Release v${{ steps.version.outputs.full_ver }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 上传 ARM64 APK
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/release/app-release-arm64-v8a.apk
+          tag_name: v${{ steps.version.outputs.full_ver }}-arm64
+          name: Release v${{ steps.version.outputs.full_ver }} (ARM64)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
