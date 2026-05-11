@@ -32,9 +32,13 @@ jobs:
           GPR_USER: lvtong199881
           GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # 修正 HOME 环境变量以确保 gradle 能找到配置
+          echo "HOME=/home/runner" >> $GITHUB_ENV
           mkdir -p ~/.gradle
-          echo "gpr.user=${GPR_USER}" > ~/.gradle/gradle.properties
-          echo "gpr.key=${GPR_TOKEN}" >> ~/.gradle/gradle.properties
+          cat > ~/.gradle/gradle.properties << 'EOF'
+gpr.user=lvtong199881
+gpr.token=${{ secrets.GITHUB_TOKEN }}
+EOF
 
       - name: 赋予 gradlew 执行权限
         run: chmod +x gradlew
