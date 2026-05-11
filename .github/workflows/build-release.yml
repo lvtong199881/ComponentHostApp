@@ -33,7 +33,7 @@ jobs:
           GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p ~/.gradle
-          echo "gpr.user=${GPR_USER}" >> ~/.gradle/gradle.properties
+          echo "gpr.user=${GPR_USER}" > ~/.gradle/gradle.properties
           echo "gpr.key=${GPR_TOKEN}" >> ~/.gradle/gradle.properties
 
       - name: 赋予 gradlew 执行权限
