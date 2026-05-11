@@ -2,7 +2,7 @@ import java.io.File
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android") version "2.2.10"
+    id("org.jetbrains.kotlin.android") version "2.2.0"
 }
 
 android {
