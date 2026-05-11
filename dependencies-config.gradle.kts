@@ -34,13 +34,10 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lvtong199881/PackagesMaven")
+            url = uri("https://maven.pkg.github.com/lvtong199881/ComponentHostApp")
             credentials {
-                username = "lvtong199881"
-                password = System.getenv("GITHUB_TOKEN") ?: run {
-                    val tokenFile = java.io.File(System.getProperty("user.home"), ".github_token")
-                    if (tokenFile.exists()) tokenFile.readText().trim() else ""
-                }
+                username = System.getenv("GPR_USER") ?: "github-actions[bot]"
+                password = System.getenv("GPR_TOKEN") ?: ""
             }
         }
     }

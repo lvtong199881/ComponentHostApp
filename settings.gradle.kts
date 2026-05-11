@@ -6,21 +6,6 @@ pluginManagement {
     }
 }
 
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lvtong199881/ComponentHostApp")
-            credentials {
-                username = System.getenv("GPR_USER") ?: "github-actions[bot]"
-                password = System.getenv("GPR_TOKEN") ?: ""
-            }
-        }
-    }
-}
-
 rootProject.name = "ComponentHostApp"
 
 // 宿主应用模块
