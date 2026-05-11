@@ -36,8 +36,8 @@ dependencyResolutionManagement {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/lvtong199881/PackagesMaven")
             credentials {
-                username = "lvtong199881"
-                password = System.getenv("GITHUB_TOKEN") ?: ""
+                username = System.getenv("gpr.user") ?: "lvtong199881"
+                password = System.getenv("gpr.key") ?: ""
             }
         }
     }
