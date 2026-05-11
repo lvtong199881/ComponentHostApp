@@ -26,14 +26,6 @@ jobs:
       - name: 恢复 keystore 文件
         run: |
           echo "${{ secrets.RELEASE_KEYSTORE_FILE }}" | base64 -d > app/release.jks
-          ls -la app/release.jks
-
-      - name: 配置 GitHub Packages 认证
-        run: |
-          mkdir -p ~/.gradle
-          echo "gpr.user=lvtong199881" > ~/.gradle/gradle.properties
-          echo "gpr.key=${{ secrets.GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
-          cat ~/.gradle/gradle.properties
 
       - name: 赋予 gradlew 执行权限
         run: chmod +x gradlew
@@ -43,23 +35,16 @@ jobs:
         run: |
           VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts)
           echo "ver=$VERSION" >> $GITHUB_OUTPUT
-          echo "版本号: $VERSION"
-
-      - name: 测试依赖解析
-        run: |
-          ./gradlew dependencies --configuration releaseRuntimeClasspath 2>&1 | head -100
 
       - name: 构建 Release APK
-        run: |
-          ./gradlew assembleRelease 2>&1
-          ls -la app/build/outputs/apk/release/ 2>/dev/null || echo "APK目录不存在"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew assembleRelease
 
       - name: 重命名 APK
-        if: success()
         run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.ver }}.apk
 
       - name: 上传至 GitHub Release
-        if: success()
         uses: softprops/action-gh-release@v2
         with:
           files: app/build/outputs/apk/release/app-release-v${{ steps.version.outputs.ver }}.apk
