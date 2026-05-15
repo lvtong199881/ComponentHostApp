@@ -37,10 +37,21 @@ dependencyResolutionManagement {
             url = uri("https://maven.pkg.github.com/lvtong199881/PackagesMaven")
             credentials {
                 username = "lvtong199881"
-                password = System.getenv("GITHUB_TOKEN") ?: run {
-                    val tokenFile = java.io.File(System.getProperty("user.home"), ".github_token")
-                    if (tokenFile.exists()) tokenFile.readText().trim() else ""
-                }
+                password = System.getenv("GITHUB_TOKEN")
+                    ?.takeIf { it.isNotBlank() }
+                    ?: run {
+                        val tokenFile = java.io.File(System.getProperty("user.home"), ".github_token")
+                        if (tokenFile.exists()) tokenFile.readText().trim() else ""
+                    }
+                    ?.takeIf { it.isNotBlank() }
+                    ?: run {
+                        val gradleProps = java.util.Properties()
+                        val gradleFile = java.io.File(System.getProperty("user.home"), ".gradle/gradle.properties")
+                        if (gradleFile.exists()) {
+                            gradleFile.inputStream().use { gradleProps.load(it) }
+                        }
+                        gradleProps.getProperty("gpr.token", "")
+                    }
             }
         }
     }

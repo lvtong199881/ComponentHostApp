@@ -18,18 +18,44 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(project.findProperty("RELEASE_KEYSTORE_FILE") as String)
+            storePassword = project.findProperty("RELEASE_KEYSTORE_PASSWORD") as String
+            keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as String
+            keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures { viewBinding = true }
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a")
+            isUniversalApk = true
+        }
+    }
+
+    packaging {
+        jniLibs {
+            keepDebugSymbols += listOf("**/*.so")
+        }
+    }
 }
 
 // ============================================================
@@ -169,20 +195,20 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // ========== 基础组件 (Maven) ==========
-    implementation("com.mohanlv:base:1.2.33")
-    implementation("com.mohanlv:startup:1.2.34")
-    implementation("com.mohanlv:router:1.2.15")
-    implementation("com.mohanlv:network:1.2.20")
-    implementation("com.mohanlv:logger:1.2.31")
+    implementation("com.mohanlv:base:1.2.34")
+    implementation("com.mohanlv:startup:1.2.35")
+    implementation("com.mohanlv:router:1.2.16")
+    implementation("com.mohanlv:network:1.2.21")
+    implementation("com.mohanlv:logger:1.2.32")
 
     // ========== 业务组件 (Maven) ==========
-    implementation("com.mohanlv:common:1.0.10")
-    implementation("com.mohanlv:login:1.2.20")
-    implementation("com.mohanlv:home:1.2.27")
-    implementation("com.mohanlv:user:1.2.23")
-    implementation("com.mohanlv:reactnative:1.2.13")
-    implementation("com.mohanlv:websdk:1.2.20")
-    implementation("com.mohanlv:shortvideo:1.2.30")
+    implementation("com.mohanlv:common:1.0.19")
+    implementation("com.mohanlv:login:1.2.22")
+    implementation("com.mohanlv:home:1.2.29")
+    implementation("com.mohanlv:user:1.2.25")
+    implementation("com.mohanlv:reactnative:1.2.14")
+    implementation("com.mohanlv:websdk:1.2.21")
+    implementation("com.mohanlv:shortvideo:1.2.32")
     // ===================================
     
     // Lifecycle
